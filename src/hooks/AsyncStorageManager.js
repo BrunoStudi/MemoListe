@@ -1,9 +1,16 @@
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useAppContext from "./useAppContext";
 
 
 export default function AsyncStorageManager() {
-    const [toDoList, toDoListChange] = React.useState([]);
+    const { 
+        state : {toDoList}, 
+        dispatch } = useAppContext();
+
+    function toDoListChange(newList){
+        dispatch({type : "TO_DO_LIST_CHANGE", toDoList : newList});
+    }
 
     React.useEffect(() => {
         AsyncStorage.getItem("todolist").then((savedToDoList) => {
@@ -19,6 +26,7 @@ export default function AsyncStorageManager() {
         newToDoList.push(toDo);
         const jsonValue = JSON.stringify(newToDoList);
         await AsyncStorage.setItem("todolist", jsonValue);
+        toDoListChange(newToDoList);
     }
 
     async function toDoUpdate(index, toDo) {
@@ -26,6 +34,7 @@ export default function AsyncStorageManager() {
         newToDoList.splice(index, 1, toDo);
         const jsonValue = JSON.stringify(newToDoList);
         await AsyncStorage.setItem("todolist", jsonValue);
+        toDoListChange(newToDoList);
     }
 
     async function toDoDelete(index) {
@@ -33,6 +42,7 @@ export default function AsyncStorageManager() {
         newToDoList.splice(index, 1);
         const jsonValue = JSON.stringify(newToDoList);
         await AsyncStorage.setItem("todolist", jsonValue);
+        toDoListChange(newToDoList);
     }
 
     return {toDoList, toDoCreate, toDoUpdate, toDoDelete};
