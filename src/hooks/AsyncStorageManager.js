@@ -21,6 +21,19 @@ export default function AsyncStorageManager() {
         await AsyncStorage.setItem("todolist", jsonValue);
     }
 
+    async function toDoUpdate(index, toDo) {
+        const newToDoList = [...toDoList];
+        newToDoList.splice(index, 1, toDo);
+        const jsonValue = JSON.stringify(newToDoList);
+        await AsyncStorage.setItem("todolist", jsonValue);
+    }
 
-    return {toDoList, toDoCreate};
+    async function toDoDelete(index) {
+        const newToDoList = [...toDoList];
+        newToDoList.splice(index, 1);
+        const jsonValue = JSON.stringify(newToDoList);
+        await AsyncStorage.setItem("todolist", jsonValue);
+    }
+
+    return {toDoList, toDoCreate, toDoUpdate, toDoDelete};
 }
