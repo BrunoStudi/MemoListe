@@ -1,8 +1,12 @@
 import React from "react";
 
+import AsyncStorageManager from "./AsyncStorageManager";
+
 export default function ListeManager() {
     const [title, titleChange] = React.useState("");
     const [description, descriptionChange] = React.useState("");
+
+    AsyncStorageManager();
 
     const fieldsTab = [{ value : title,
         onChange : (e) => titleChange(e),
