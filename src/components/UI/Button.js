@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         width : "100%",
         padding : 5,
         alignItems : "center",
+        marginTop : 32
     },
     title: {
         color : "white",

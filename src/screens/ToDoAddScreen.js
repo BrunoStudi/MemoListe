@@ -1,21 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import Input from "@components/UI/Input";
 import Button from "@components/UI/Button";
+import Title from "@components/UI/Title";
 import ListeManager from "@hooks/ListeManager";
 
 
-export default function ToDoAddScreen({ navigation }) {
+export default function ToDoAddScreen() {
     const {fieldsTab, handleSubmit } = ListeManager();
-
-    function handlePress(){
-        navigation.navigate("HomeScreen");
-    }
 
     return (
     <View style={styles.container}>
-        <Text style={styles.titre}>AJOUTER UNE TACHE</Text>
+        <Title>Ajouter une tâche</Title>
         {fieldsTab.map(({ value, onChange, placeholder }) => {
             return (
                 <Input 
@@ -33,14 +30,9 @@ export default function ToDoAddScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'left',
+      justifyContent: 'center',
       padding : 15,
-      backgroundColor : "rgba(0,0,0,0.05)"
-    },
-    titre: {
-        fontWeight : "700",
-        marginBottom : 300
-    },
+      backgroundColor : "#f7f3e9"
+    }
   });

@@ -1,32 +1,39 @@
 import React from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import Button from "@components/UI/Button";
+import Title from "@components/UI/Title";
 import AsyncStorageManager from "@hooks/AsyncStorageManager";
 import ToDoCard from "@components/ToDoCard";
 
 
+
 export default function HomeScreen({ navigation }) {
-    const { toDoList, toDoDelete } = AsyncStorageManager();
+    const { toDoList, toDoUpdate, toDoDelete } = AsyncStorageManager();
 
     function handlePress(){
         navigation.navigate("ToDoAddScreen");
     }
     return (
-    <View style={styles.container}>
-        <Text style={styles.titre}>Mémo Liste</Text>
-            {toDoList.map(({ title, description }, index) => {
+    <ScrollView contentContainerStyle={styles.container}>
+        <Title>Mémo Liste</Title>
+            {toDoList.map(({ title, description, checked }, index) => {
                 function handleDelete(){
                     toDoDelete(index);
+                }
+                function handleCheckedChange() {
+                    toDoUpdate(index, {title, description, checked : !checked});
                 }
                 return (
                     <ToDoCard key={index} 
                     title={title} 
                     description={description}
-                    handleDelete ={handleDelete} />
+                    checked={checked}
+                    handleDelete ={handleDelete}
+                    handleCheckedChange={handleCheckedChange} />
                 );
             })}
             <Button onPress={handlePress}>Modifer ma liste</Button>
-    </View>
+    </ScrollView>
     );
 }
 
@@ -37,10 +44,5 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       padding : 15
-    },
-    titre: {
-        fontSize : 20,
-        fontWeight : 700,
-        
-    },
+    }
 });

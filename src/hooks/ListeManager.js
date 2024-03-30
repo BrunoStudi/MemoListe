@@ -22,7 +22,7 @@ async function handleSubmit() {
     if (title.length === 0){
         return alert("La tache requiert un titre");
     }
-    await toDoCreate({ title, description });
+    await toDoCreate({ title, description, checked: false });
     titleChange("");
     descriptionChange("");
 }
